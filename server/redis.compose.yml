@@ -20,7 +20,13 @@ services:
             - REDIS_HOSTS=local:redis:6379
         ports:
             - '8081:8081'
+        networks:
+            - local_nw
 
 volumes:
     redis-data:
         driver: local
+
+networks:
+    local_nw:
+        external: true

@@ -10,8 +10,8 @@ services:
             - ./html:/usr/share/nginx/html
             - ./logs:/var/log/nginx
         networks:
-            - nginx_network
+            - local_nw
 
 networks:
-    nginx_network:
-        driver: bridge
+    local_nw:
+        external: true

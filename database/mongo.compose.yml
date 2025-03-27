@@ -10,12 +10,12 @@ services:
         volumes:
             - mongo-data:/data/db
         networks:
-            - mongo_network
+            - local_nw
 
 volumes:
     mongo-data:
         driver: local
 
 networks:
-    - mongo_network:
-          driver: bridge
+    local_nw:
+        external: true

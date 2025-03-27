@@ -1,7 +1,7 @@
 services:
     postgres:
         image: postgres:latest
-        container_name: postgres_container
+        container_name: postgres
         environment:
             POSTGRES_USER: root
             POSTGRES_PASSWORD: password@123
@@ -9,7 +9,13 @@ services:
             - postgres_data:/var/lib/postgresql/data
         ports:
             - '5432:5432'
+        networks:
+            - local_nw
 
 volumes:
     postgres_data:
         driver: local
+
+networks:
+    local_nw:
+        external: true

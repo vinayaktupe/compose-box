@@ -2,17 +2,21 @@ services:
     rabbitmq:
         image: rabbitmq:management
         container_name: rabbitmq
+        environment:
+            RABBITMQ_ERLANG_COOKIE: 'SWQOKODSQALRPCLNMEQG'
+            RABBITMQ_DEFAULT_USER: 'root'
+            RABBITMQ_DEFAULT_PASS: 'password@123'
         ports:
             - '5672:5672'
             - '15672:15672'
         volumes:
             - rabbitmq_data:/var/lib/rabbitmq
         networks:
-            - rabbitmq_network
+            - local_nw
 
 volumes:
     rabbitmq_data:
 
 networks:
-    rabbitmq_network:
-        driver: bridge
+    local_nw:
+        external: true

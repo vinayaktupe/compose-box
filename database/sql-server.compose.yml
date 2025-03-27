@@ -9,7 +9,13 @@ services:
             - '1433:1433'
         volumes:
             - sqlserver-data:/var/opt/mssql
+        networks:
+            - local_nw
 
 volumes:
     sqlserver-data:
         driver: local
+
+networks:
+    local_nw:
+        external: true

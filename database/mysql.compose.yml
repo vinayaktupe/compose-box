@@ -9,7 +9,13 @@ services:
             - '3306:3306'
         volumes:
             - mysql_data:/var/lib/mysql
+        networks:
+            - local_nw
 
 volumes:
     mysql_data:
         driver: local
+
+networks:
+    local_nw:
+        external: true
