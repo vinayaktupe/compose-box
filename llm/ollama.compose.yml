@@ -1,0 +1,27 @@
+services:
+    ollama:
+        image: ollama/ollama:latest
+        container_name: ollama
+        restart: unless-stopped
+        ports:
+            - '11434:11434'
+        volumes:
+            - ollama_data:/root/.ollama
+        environment:
+            - OLLAMA_HOST=0.0.0.0
+        deploy:
+            resources:
+                limits:
+                    memory: 12g
+                reservations:
+                    memory: 4g
+        runtime: nvidia
+        networks:
+            - local_nw
+
+volumes:
+    ollama_data:
+
+networks:
+    local_nw:
+        external: true
