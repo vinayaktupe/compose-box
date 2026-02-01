@@ -1,6 +1,6 @@
 services:
     redis:
-        image: redis:latest
+        image: redis:7-alpine
         container_name: redis-server
         ports:
             - '6379:6379'
@@ -8,6 +8,8 @@ services:
             - redis-data:/data
         environment:
             - REDIS_PASSWORD=password@123
+        networks:
+            - local_nw
 
     redis-server:
         container_name: redis-commander

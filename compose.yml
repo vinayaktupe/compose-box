@@ -2,8 +2,8 @@ include:
     # - ./database/mongo.compose.yml
     # - ./database/mysql.compose.yml
     # - ./cms/wordpress.compose.yml
-    # - ./llm/ollama.compose.yml
-    - ./database/postgres.compose.yml
+    - ./llm/ollama.compose.yml
+    # - ./database/postgres.compose.yml
     # - ./database/sql-server.compose.yml
     # - ./message/rabbit-mq.compose.yml
     # - ./server/elasticsearch.compose.yml
