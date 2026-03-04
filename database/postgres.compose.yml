@@ -19,6 +19,7 @@ services:
 volumes:
     postgres_data:
 
+
 networks:
     local_nw:
         external: true
