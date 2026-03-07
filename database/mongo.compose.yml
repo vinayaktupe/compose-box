@@ -20,7 +20,7 @@ services:
     mongo-express:
         image: mongo-express
         container_name: mongo-express
-        restart: always
+        # restart: always
         depends_on:
             mongo:
                 condition: service_healthy

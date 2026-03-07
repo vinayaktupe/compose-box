@@ -17,7 +17,7 @@ services:
         image: rediscommander/redis-commander:latest
         depends_on:
             - redis
-        restart: always
+        # restart: always
         environment:
             - REDIS_HOSTS=local:redis:6379
         ports:
