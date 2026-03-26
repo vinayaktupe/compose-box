@@ -1,25 +1,49 @@
 services:
-    wordpress:
-        image: wordpress:latest
+    nginx:
+        image: nginx:alpine
         ports:
-            - '80:80'
+            - '8080:80'
+        volumes:
+            - wordpress_data:/var/www/html
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - wordpress
+
+    wordpress:
+        image: wordpress:php8.2-fpm
         environment:
-            WORDPRESS_DB_HOST: db
+            WORDPRESS_DB_HOST: db:3306
             WORDPRESS_DB_USER: wordpressuser
             WORDPRESS_DB_PASSWORD: wordpresspassword
             WORDPRESS_DB_NAME: wordpressdb
+            WORDPRESS_CONFIG_EXTRA: |
+                define('WP_HOME', 'http://localhost:8080');
+                define('WP_SITEURL', 'http://localhost:8080');
         volumes:
-            - ./wp-content:/var/www/html/wp-content # Persist wp-content
-            - wpfiles:/var/www/html
+            - wordpress_data:/var/www/html
+            - ./php.ini:/usr/local/etc/php/conf.d/custom.ini
         depends_on:
             - db
+            - redis
 
     db:
-        image: mysql:8.0
+        image: mariadb:10.6
+        command: >
+            --innodb-buffer-pool-size=256M
+            --max-connections=200
+            --query-cache-size=64M
         environment:
             MYSQL_ROOT_PASSWORD: rootpassword
             MYSQL_DATABASE: wordpressdb
             MYSQL_USER: wordpressuser
             MYSQL_PASSWORD: wordpresspassword
         volumes:
-            - ./db_data:/var/lib/mysql # Persist database data
+            - db_data:/var/lib/mysql
+
+    redis:
+        image: redis:alpine
+        command: redis-server --maxmemory 128mb --maxmemory-policy allkeys-lru
+
+volumes:
+    wordpress_data:
+    db_data:
